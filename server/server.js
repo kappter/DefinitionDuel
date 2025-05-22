@@ -12,7 +12,13 @@ app.use(express.static(path.join(__dirname, '../public')));
 
 let duelQueue = [];
 let games = {};
-const vocab = JSON.parse(fs.readFileSync(path.join(__dirname, '../vocab.json')));
+let vocab = [];
+
+try {
+  vocab = JSON.parse(fs.readFileSync(path.join(__dirname, '../vocab.json')));
+} catch (err) {
+  console.error('Failed to load vocab.json:', err.message);
+}
 function getRandomTerm() {
   const index = Math.floor(Math.random() * vocab.length);
   return vocab[index];
